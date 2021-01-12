@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SoloLearn Battle Royale</title>
+        <link rel="stylesheet" href="style.css">
+        
+        <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
+        <script src="https://rawcdn.githack.com/bureyburey/bad-words-compact/520ca0221951c4577ab331116b931f04dd88fc1e/bad-words-compact.min.js"></script>
+        <script src="https://rawcdn.githack.com/bureyburey/canvas-joystick/5f999252c0d8d1ee77cab3d7e1ff980e72918e7f/joystick.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="main.js"></script>
+    </head>
+    <body>
+        <div id="screen-1">
+            <h3>Click Image To Join the Server</h3>
+            <div id="join-form">
+                <input placeholder="Player Name:" id="name" />
+                <div class="styled-select blue semi-square">
+                <select id="gender">
+                    <option value="RANDOM">Random</option>
+                    <option value="SKELETON">Skeleton</option>
+                    <option value="HANK">Hank (M)</option>
+                    <option value="MAGE">Mage (M)</option>
+                    <option value="PRINCESS">Princess (F)</option>
+                    <option value="FEMALE">Female</option>
+                    <option value="MALE">Male</option>
+                    <option value="PIXIE">Pixie (F)</option>
+                    <option value="ORC">Orc (M)</option>
+                    <option value="RED">Red (F)</option>
+                    <option value="KNIGHT_M">Knight (M)</option>
+                    <option value="KNIGHT_F">Knight (F)</option>
+                </select>
+                </div>
+                <button class="styled-button blue semi-square" onclick="viewChangelog()">Change Log</button>
+            </div>
+            <div id="MEADOW-users">Online Players: Loading...</div>
+            <img onclick="init(event)" name="MEADOW" src="https://media.istockphoto.com/vectors/top-view-of-the-countryside-vector-id922427928?k=6&m=922427928&s=612x612&w=0&h=F10tpSjLTLbmGYVxVSVUciDoJJf24N6_mzH9b5K5c9o="/>
+            <div id="BEACH-users">Online Players: Loading...</div>
+            <img onclick="init(event)" name="BEACH" src="https://thumbs.dreamstime.com/t/top-view-sand-shells-starfish-flat-icon-design-beach-background-93492920.jpg"/>
+            <div id="GRASS-users">Online Players: Loading...</div>
+            <img onclick="init(event)" name="GRASS" src="https://img00.deviantart.net/c3f4/i/2011/353/a/a/mobile_game_background_by_disnie-d4jmrye.jpg"/>
+        </div>
+        
+        <div id="screen-2">
+            <canvas id="canvas" width="500" height="500" />
+        </div>
+        
+        <form autocomplete="off" id="chat-form">
+            <input placeholder="Message:" id="message" />
+            <button type="submit" onclick="sendMessage(event)">Send</button>
+            <button onclick="showPlayers(event)">Players</button>
+        </form>
+        <div id="debug" />
+        <script>
+function gUid() {
+    var S4 = function() {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+}
+
+function log(msg, append) {
+    var debug = document.getElementById("debug");
+    msg = window.markdown.specToEntities(msg);
+    if(append){
+        debug.innerHTML = `<div>${msg}</div>${debug.innerHTML}`;
+    }
+    else{
+        debug.innerHTML = `<div>${msg}</div>`;
+    }
+}
+
+function bezierCurve(ctx, centerX, centerY, width, height,fillType) {
+// draws a single ellipse
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY - height / 2);
+
+    ctx.bezierCurveTo(
+        centerX + width / 2, centerY - height / 2,
+        centerX + width / 2, centerY + height / 2,
+        centerX, centerY + height / 2
+    );
+    ctx.bezierCurveTo(
+        centerX - width / 2, centerY + height / 2,
+        centerX - width / 2, centerY - height / 2,
+        centerX, centerY - height / 2
+    );
+    
+    ctx.closePath();
+    if(fillType==='fill')
+        ctx.fill();
+    else
+        ctx.stroke();
+}
+
+Array.prototype.find = Array.prototype.find || function(callback) {
+  if (this === null) {
+    throw new TypeError('Array.prototype.find called on null or undefined');
+  } else if (typeof callback !== 'function') {
+    throw new TypeError('callback must be a function');
+  }
+  var list = Object(this);
+  // Makes sures is always has an positive integer as length.
+  var length = list.length >>> 0;
+  var thisArg = arguments[1];
+  for (var i = 0; i < length; i++) {
+    var element = list[i];
+    if ( callback.call(thisArg, element, i, list) ) {
+      return element;
+    }
+  }
+};
+
+
+if(!Array.prototype.includes){Object.defineProperty(Array.prototype,'includes',{value:function(searchElement,fromIndex){if(this==null){throw new TypeError('"this" is null or not defined')}
+var o=Object(this);var len=o.length>>>0;if(len===0){return!1}
+var n=fromIndex|0;var k=Math.max(n>=0?n:len-Math.abs(n),0);function sameValueZero(x,y){return x===y||(typeof x==='number'&&typeof y==='number'&&isNaN(x)&&isNaN(y))}
+while(k<len){if(sameValueZero(o[k],searchElement)){return!0}
+k++}
+return!1}})};
+
+
+window.markdown = {
+    // Michael Ermishin's Markdown module
+    htmlEntitiesMap: {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;',
+        ' ': '&nbsp;'
+    },    
+    specToEntities: function(text) {
+    if(text[0]==="$"){return text.replaceAll('$','')}
+        var pattern = new RegExp('[' + Object.keys(this.htmlEntitiesMap).join('') + ']', 'g');
+        return text.replace(pattern, function (m) {
+            return markdown.htmlEntitiesMap[m];
+        });
+    },
+    entitiesToSpec: function(text) {
+        var entToSpecMap = Object.keys(this.htmlEntitiesMap).reduce(function(obj, key) {
+            obj[markdown.htmlEntitiesMap[key]] = key;
+            return obj;
+        }, {});
+
+        var pattern = new RegExp(Object.keys(entToSpecMap).join('|'), 'g');
+        return text.replace(pattern, function (m) {
+            return entToSpecMap[m];
+        });
+    }
+};
+
+function viewChangelog(){
+    alert("Change Log:\n\n8/10/2018 - Initial release:\n- walk around on the beach\n- Male, Female avatars added\n- messages displayed above player avatar\n\n9/10/2018 - Features added:\n- SLASH attack pattern added\n- battle system added\n- chat history added\n\n10/10/2018 - Features added:\n- DIE animation pattern added\n- Orc avatar added (Amr Attia)\n- Knight avatar added (Vlogger Matt)\n- Pixie avatar added (Rowsej)\n\n11/10/2018 - Features added:\n- GRASS background added\n- HP bar added\n- random names replaced the default 'Anonymous User'\n- Princess avatar added (Rowsej)\n- STAB attack pattern added (Rowsej)\n- Red avatar added (Burey)\n- Mage avatar added (LONGTIE👔)\n- MAGIC attack pattern added\n- Hank avatar added (Burey)\n- BIG_SWORD attack pattern added\n- change log added (suggested by Vlogger Matt)\n\n12/10/2018 - Features added:\n- fainted players respawn at a random position on the top\n- enabled attack while using the joystick (mobile)\n- MEADOW background added\n- auto kick players who uses profanity in chat\n\n13/10/2018 - Features added:\n- Skeleton avatar added (Vlogger Matt)\n- added logged player list\n\n17/10/2018 - Features added:\n- added online players count in server on main screen\n\n24/10/2018 - Features added:\n- SPEAR attack pattern added\n- Female Knight avatar added (Gordon Chan)");
+}
+
+
+function randVal(min, max){
+    return Math.floor(Math.random() * (max - min) + min);
+}
+        </script>
+    </body>
+</html>

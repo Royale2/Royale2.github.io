@@ -1,0 +1,98 @@
+body {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently */
+    background: black;
+}
+h3{
+    color: white;
+    text-align: center;
+}
+#screen-1{
+    display: flex;
+    flex-direction: column;
+}
+
+#screen-1 div{
+    width: 95vw;
+    color: white;
+}
+
+#screen-1 img{
+    height: 30vw;
+    margin: 2px 0;
+    border-radius: 5px;
+}
+
+#screen-2{
+    display: none;
+}
+
+#debug{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    width: 95vw;
+    word-break: break-all;
+}
+
+#debug > div:nth-child(even){
+    background: grey;
+}
+
+#canvas {
+    width: 95vw;
+    /*height: 90vh;*/
+    border:1px solid red;
+    background: no-repeat center center fixed;
+    background-size: cover;
+}
+
+#chat-form{
+    display: none;
+}
+
+#chat-form > input{
+    flex: 2;
+}
+
+#join-form{
+    display: flex;
+}
+
+.blue { background-color: #3b8ec2; }
+
+.styled-select, .styled-button {
+   height: 29px;
+   overflow: hidden;
+   width: 240px;
+   margin: 0 1px;
+}
+
+.styled-select select {
+   background: transparent;
+   border: none;
+   font-size: 12px;
+   height: 29px;
+   padding: 5px; /* If you add too much padding here, the options won't show in IE */
+   width: 268px;
+   color: white;
+}
+
+.styled-button{
+   border: none;
+   font-size: 10px;
+   height: 29px;
+   padding: 5px; /* If you add too much padding here, the options won't show in IE */
+   width: 268px;
+   color: white;
+}
+
+.semi-square {
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+}

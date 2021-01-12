@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Royale2 Start</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
+  <body>
+  				<style>
+  		*{
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+body{
+  font-family: montserrat;
+}
+nav{
+  background: purple;
+  height: 80px;
+  width: 100%;
+}
+label.logo{
+  color: white;
+  font-size: 35px;
+  line-height: 80px;
+  padding: 0 100px;
+  font-weight: bold;
+  border:none;
+}
+nav ul{
+  float: right;
+  margin-right: 20px;
+}
+nav ul li{
+  display: inline-block;
+  line-height: 80px;
+  margin: 0 5px;
+}
+nav ul li a{
+  color: white;
+  font-size: 17px;
+  padding: 7px 13px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+a.active,a:hover{
+  background: #1b9bff;
+  transition: .5s;
+}
+.checkbtn{
+  font-size: 30px;
+  color: white;
+  float: right;
+  line-height: 80px;
+  margin-right: 40px;
+  cursor: pointer;
+  display: none;
+}
+#check{
+  display: none;
+}
+@media (max-width: 952px){
+  label.logo{
+    font-size: 30px;
+    padding-left: 50px;
+  }
+  nav ul li a{
+    font-size: 16px;
+  }
+}
+@media (max-width: 858px){
+  .checkbtn{
+    display: block;
+  }
+  ul{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: #2c3e50;
+    top: 80px;
+    left: -100%;
+    text-align: center;
+    transition: all .5s;
+  }
+  nav ul li{
+    display: block;
+    margin: 50px 0;
+    line-height: 30px;
+  }
+  nav ul li a{
+    font-size: 20px;
+  }
+  a:hover,a.active{
+    background: none;
+    color: #0082e6;
+  }
+  #check:checked ~ ul{
+    left: 0;
+  }
+}
+section{
+  background: url(bg1.jpg) no-repeat;
+  background-size: cover;
+  height: calc(100vh - 80px);
+}
+label.logo > a {
+  color: white;
+  }
+#container{
+				width:55vh;
+				height:600px;
+				background-color:lightgreen;
+				margin:auto auto;
+				padding:20px;
+				margin-top:30px;
+}
+#startBtn{
+				width:200px;
+				height: 50px;
+				border:2px solid black;
+				font-size:30px;
+				color:#2b96ff;
+				text-decoration:none;
+				background-color:	#55ffd5;
+				margin:auto auto;
+				text-align:center;
+				border:none;
+				outline:none;
+				border-radius:30px;
+				cursor:pointer;
+}
+#Btn{
+				margin-top:40px;
+}
+
+#ytVideo{
+				width:300px;
+				height:150px;
+				border:1px solid black;
+				margin-top:10vh;
+}
+#ytVideoIframe{
+				width:280px;
+				height:130px;
+				margin-left:10px;
+				margin-top:8px;
+				
+}
+hr{
+				margin-top:10vh;
+}
+#vLogs{
+				margin-top:50px;
+				text-align:center;
+				font-size:2em;
+				color:#5fdbe4;
+}
+  				</style>
+    <nav>
+      <input type="checkbox" id="check">
+      <label for="check" class="checkbtn">
+        <i class="fas fa-bars"></i>
+      </label>
+      <label class="logo"><a href="index.html">Royale2</a></label>
+      <ul>
+        <li><a class="active" href="index.html">Home</a></li>
+      <li><a href="https://instagram.com/martakan.royale_official?igshid=gwqtmufsvo61">Instagram</a></li>
+        <li><a href="https://youtube.com/channel/UCl8rJitAa6RhBvC5XwTjq1w">YouTube</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="#"></a></li>
+      </ul>
+    </nav>
+    <section>
+    			<div id="container">
+    							<a href="game.html" id="Btn">
+    		<div id="startBtn"	>			
+    	 Start
+    		</div>				
+    								</a>	
+    							<br>	<hr>
+    							<h3 id="vLogs">V-LOG</h3>
+    							<div id="ytVideo">
+    											<iframe src="https://www.youtube.com/embed/TJkJda98J2k" id="ytVideoIframe"></iframe>	
+    											<hr>
+    							</div>
+    							</div>
+    							<ul>
+    											<li>Copyright 20-21</li>
+    							</ul>
+    			
+    			
+    </section>
+    <script>
+  console.log("Welcome My Web Projects")
+  console.warn("Please Subscribe YouTube channel")
+  console.error("ERR")
+    </script>
+  </body>
+</html>
